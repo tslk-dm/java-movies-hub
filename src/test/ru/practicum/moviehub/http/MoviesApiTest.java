@@ -162,12 +162,7 @@ public class MoviesApiTest {
     // POST: Добавляет фильм при корректных данных
     @Test
     void postMovie_whenValidData_addsMovie() throws Exception {
-        String requestBody = """
-            {
-              "title": "Movie1",
-              "year": 2010
-            }
-            """;
+        String requestBody = "{\"title\":\"Movie1\",\"year\":2010}";
 
         HttpResponse<String> resp = sendPostMovies(requestBody,  "application/json");
 
@@ -189,12 +184,7 @@ public class MoviesApiTest {
     //POST: Возвращает ошибку при пустом title
     @Test
     void postMovie_whenTitleIsEmpty_returnsValidationError() throws Exception {
-        String requestBody = """
-            {
-              "title": "",
-              "year": 2010
-            }
-            """;
+        String requestBody = "{\"title\":\"\",\"year\":2010}";
 
         HttpResponse<String> resp = sendPostMovies(requestBody, "application/json");
 
@@ -215,12 +205,7 @@ public class MoviesApiTest {
     void postMovie_whenTitleTooLong_returnsValidationError() throws Exception {
         String longTitle = "a".repeat(101);
 
-        String requestBody = """
-            {
-              "title": "%s",
-              "year": 2010
-            }
-            """.formatted(longTitle);
+        String requestBody = "{\"title\":\"%s\",\"year\":2010}".formatted(longTitle);
 
         HttpResponse<String> resp = sendPostMovies(requestBody, "application/json");
 
@@ -236,12 +221,7 @@ public class MoviesApiTest {
     //POST: Возвращает ошибку при неверном year: Год меньше 1888
     @Test
     void postMovie_whenYearLessThan1888_returnsValidationError() throws Exception {
-        String requestBody = """
-            {
-              "title": "Movie1",
-              "year": 1800
-            }
-            """;
+        String requestBody = "{\"title\":\"Movie1\",\"year\":1800}";
 
         HttpResponse<String> resp = sendPostMovies(requestBody, "application/json");
 
@@ -259,12 +239,7 @@ public class MoviesApiTest {
     void postMovie_whenYearTooLarge_returnsValidationError() throws Exception {
         int invalidYear = java.time.Year.now().getValue() + 2;
 
-        String requestBody = """
-            {
-              "title": "Future Movie",
-              "year": %d
-            }
-            """.formatted(invalidYear);
+        String requestBody = "{\"title\":\"Future Movie\",\"year\":%d}".formatted(invalidYear);
 
         HttpResponse<String> resp = sendPostMovies(requestBody, "application/json");
 
@@ -280,12 +255,7 @@ public class MoviesApiTest {
     //POST: Возвращает ошибку при неправильном Content-Type
     @Test
     void postMovie_whenContentTypeIsInvalid_returnsError() throws Exception {
-        String requestBody = """
-            {
-              "title": "Movie1",
-              "year": 2010
-            }
-            """;
+        String requestBody = "{\"title\":\"Movie1\",\"year\":2010}";
 
         HttpResponse<String> resp = sendPostMovies(requestBody, "text/plain");
 
@@ -301,11 +271,7 @@ public class MoviesApiTest {
     //POST: Возвращает ошибку при некорректном JSON
     @Test
     void postMovie_whenJsonIsInvalid_returnsBadRequest() throws Exception {
-        String requestBody = """
-            {
-              "title": "Inception",
-              "year": 2010
-            """;
+        String requestBody = "{\"title\":\"Movie1\",\"year\":2010";
 
         HttpResponse<String> resp = sendPostMovies(requestBody, "application/json");
 
