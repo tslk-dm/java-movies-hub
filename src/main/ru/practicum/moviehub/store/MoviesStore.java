@@ -39,7 +39,7 @@ public class MoviesStore {
 
         Movie movie = movies.get(id);
         if (movie == null) {
-            throw new NotFoundException("Фильм не найден");
+            throw new NotFoundException("Фильм с id=%d не найден".formatted(id));
         }
 
         return movie;
@@ -61,7 +61,7 @@ public class MoviesStore {
 
         Movie removed = movies.remove(id);
         if (removed == null) {
-            throw new NotFoundException("Фильм не найден");
+            throw new NotFoundException("Фильм с id=%d не найден".formatted(id));
         }
     }
 

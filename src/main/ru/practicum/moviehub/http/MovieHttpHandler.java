@@ -93,11 +93,11 @@ public class MovieHttpHandler extends BaseHttpHandler {
                 List<Movie> movies = moviesStore.getMoviesByYear(year);
                 response = gson.toJson(movies);
                 responseCode = 200;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException exception) {
                 response = gson.toJson(new ErrorResponse("Некорректный параметр запроса — 'year'", null));
                 responseCode = 400;
-            }  catch (BadRequestException e) {
-                response = gson.toJson(new ErrorResponse(e.getMessage(), null));
+            }  catch (BadRequestException exception) {
+                response = gson.toJson(new ErrorResponse(exception.getMessage(), null));
                 responseCode = 400;
             }
         } else {
@@ -121,14 +121,14 @@ public class MovieHttpHandler extends BaseHttpHandler {
             Movie movie = moviesStore.getMovieById(id);
             response = gson.toJson(movie);
             responseCode = 200;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException exception) {
             response = gson.toJson(new ErrorResponse("Некорректный ID", null));
             responseCode = 400;
-        } catch (BadRequestException e) {
-            response = gson.toJson(new ErrorResponse(e.getMessage(), null));
+        } catch (BadRequestException exception) {
+            response = gson.toJson(new ErrorResponse(exception.getMessage(), null));
             responseCode = 400;
-        } catch (NotFoundException e) {
-            response = gson.toJson(new ErrorResponse(e.getMessage(), null));
+        } catch (NotFoundException exception) {
+            response = gson.toJson(new ErrorResponse(exception.getMessage(), null));
             responseCode = 404;
         }
 
@@ -155,10 +155,10 @@ public class MovieHttpHandler extends BaseHttpHandler {
             response = gson.toJson(createdMovie);
             responseCode = 201;
 
-        } catch (ValidationException e) {
-            response = gson.toJson(new ErrorResponse(e.getMessage(), e.getDetails()));
+        } catch (ValidationException exception) {
+            response = gson.toJson(new ErrorResponse(exception.getMessage(), exception.getDetails()));
             responseCode = 422;
-        } catch (Exception e) {
+        } catch (Exception exception) {
             response = gson.toJson(new ErrorResponse("Некорректный JSON", null));
             responseCode = 400;
         }
@@ -178,14 +178,14 @@ public class MovieHttpHandler extends BaseHttpHandler {
             moviesStore.deleteMovieById(id);
             writeEmptyResponse(exchange, 204);
             return;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException exception) {
             response = gson.toJson(new ErrorResponse("Некорректный ID", null));
             responseCode = 400;
-        } catch (BadRequestException e) {
-            response = gson.toJson(new ErrorResponse(e.getMessage(), null));
+        } catch (BadRequestException exception) {
+            response = gson.toJson(new ErrorResponse(exception.getMessage(), null));
             responseCode = 400;
-        } catch (NotFoundException e) {
-            response = gson.toJson(new ErrorResponse(e.getMessage(), null));
+        } catch (NotFoundException exception) {
+            response = gson.toJson(new ErrorResponse(exception.getMessage(), null));
             responseCode = 404;
         }
 
